@@ -96,7 +96,7 @@ formi.addEventListener('submit', e => {
             e.submitter.disabled = true;
             formi.answer.value = "";
             element.classList.add('rect');
-            alert ("Everything is");
+            alert ("Everything is OK");
         }
 
         else
