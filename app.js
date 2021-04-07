@@ -2,109 +2,105 @@
 const inputs = document.querySelector('body > div.quiz.py-4.bg-primary > div > div.text-center > input');
 const formi = document.querySelector('.quiz-form');
 
-console.log(inputs);
-console.log(formi);
 
-//FORM SUBMITTING
-formi.addEventListener('submit', e => {
-    e.preventDefault();
+/* the object e is an event object containig many usefull informations  */
+// e.preventDefault();
+// console.log('/========= event Object =========/');
+// console.log(e);
+// console.log('/========= Type of event =========/');
+// console.log(e.type);
+// console.log('/========= the handler of event =========/');
+// console.log(e.submitter);
+// console.log('/========= the target of the event =========/');
+// console.log(e.target);
+// console.log('/========= the current target if exist of the event =========/');
+// console.log(e.currentTarget);
+// console.log('/=========    =========/');
 
 
-});
-
-
-
-//RADIOS BUTTON GETTING VALUE ON CLICK
-inputs.addEventListener('click', e => {
-    e.preventDefault();
-    function getCheckedValue(radios) {
-
-        //getting the value of radios in an array
-
+formi.addEventListener("submit",function (e){
+e.preventDefault();
+console.log("formi submit");
+var answer = document.getElementById('answer').value;
+var regex = /^[a-zA-Z]{6,12}$/;
+const element = document.createElement('input');
+const div =  document.getElementById ('req_box');
+    div.append(element);
+    element.setAttribute('id','test');
+    element.setAttribute('type','text');
+    element.setAttribute.value=answer;
+    if(regex.test(answer))
+    {
+        element.setAttribute('value',answer);
+        document.getElementById('answer').value="";
+        element.classList.add("rect");
+        submit.setAttribute('disabled',true);
     }
+    else
+    {
+        div.removeChild(element);
+        document.getElementById('answer').value="";
+        alert('you didnt respect the regex');
+    }   
+})
 
- //algorithm for checking the answers
 
-    });
-
-    //the window object //scroll on top automatique
-    scrollTo(0,0);
-
-
-   //Code to animate the speed of the Score
-    // const result = document.querySelector('.result');
-    // result.classList.remove('d-none');
-    // let output = 0;
-    // const timer = setInterval(() => {
-    //     result.querySelector('span').textContent=`${output}%`;
-    //     if(output === score){
-
-    //         clearInterval(timer);
-    //     }
-    //     else {
-    //         output++;
-    //     }
-    // }, 20);
-
-// const x= document.getElementById("container");
+// const x = document.getElementById("container");
 // console.log(x.previousElementSibling);
 
-const x= document.getElementById("container");
-console.log(x.nextElementSibling);
+// const y = document.querySelector("div");
+// console.log(y.previousElementSibling);
+
+// const MT = document.querySelectorAll("div");
+// console.log(MT);
+
+// var radios = document.querySelectorAll('[type="radio"]');
+// console.log(radios);
 
 
-var radios = document.querySelectorAll('[type="radio"]');
-console.log(radios);
 
-/* A node list in Javascript is an array it can be iterative */
-radios.forEach(element =>{
 
-    //code here to get the value of the radios
-console.log(element.value);
+function checkAnswer(value, index) {
+    let gAnswer = ["B", "B", "B", "B"];
+    if (value != gAnswer[index]) {
+        return false;
+    }
+    return true;
+
+}
+
+
+const bigSub = document.getElementById("btn");
+    bigSub.addEventListener('click', () => {
+let answerR = document.querySelectorAll('[type="radio"]:checked');
+let score = 0;
+    answerR.forEach((element, index) => {
+    if (checkAnswer(element.value, index)) {
+        score += 25;
+    }
 });
+showScore(score);
+})
 
-/*Events and DOM */
-formi.addEventListener('submit', e => { 
-    e.preventDefault(); //to stop the event normal behavior and refreshing the page
-    
-    
-     /* the object e is an event object containig many usefull informations  */
-        // e.preventDefault();
-        // console.log('/========= event Object =========/');
-        // console.log(e);
-        // console.log('/========= Type of event =========/');
-        // console.log(e.type);
-        // console.log('/========= the handler of event =========/');
-        // console.log(e.submitter);
-        // console.log('/========= the target of the event =========/');
-        // console.log(e.target);
-        // console.log('/========= the current target if exist of the event =========/');
-        // console.log(e.currentTarget);
-        // console.log('/=========    =========/');
+function check() {
+    document.querySelector('[type="radio"]').checked = true;
+}
 
-        var answer = document.getElementById('answer').value;
-        var regex = /^[a-zA-Z]{6,12}$/;
-            
-        if(regex.test(answer))
-        {  
-            const element = document.createElement('input');
-            const div =  document.getElementById ('req_box');
-            div.append(element);
-            element.setAttribute('value',answer);
-            element.setAttribute('id','test');
-            element.setAttribute('name',"q1");
-            e.submitter.disabled = true;
-            formi.answer.value = "";
-            element.classList.add('rect');
-            alert ("Everything is OK");
+
+
+//Score 
+function showScore(score) {
+    let output = 0;
+    document.querySelector('.result').classList.remove("d-none");
+    scrollTo(0, 0)
+    const timer = setInterval(() => {
+        if (output === score) {
+            clearInterval(timer);
+        } else {
+            output++;
+            document.querySelector('#score').innerText = " " + output + "% ";
         }
-
-        else
-        {
-            formi.answer.value = "";
-            alert('You didnt respect the regex!');
-        }
+    }, 50)
 
 
-    
-    });
+}
